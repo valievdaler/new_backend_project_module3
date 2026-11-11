@@ -1,18 +1,22 @@
 package main
 
-import "log"
+import (
+	"log"
+	"github.com/valievdaler/task-tracker/internal/env"
+
+)
 
 func main() {
 
 	cfg := config{
-		addr: ":8080",
+		addr: env.GetString("ADDR",":8080"),
 	}
 
 	app := &application{
 		config: cfg,
 	}
 
-	log.Printf("Server has started ar %s",app.config.addr)
+	log.Printf("Server has started at %s",app.config.addr)
 	mux:=app.mount()
 	log.Fatal(app.run(mux))
 }
